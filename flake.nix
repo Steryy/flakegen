@@ -50,7 +50,7 @@
       flakeSource = path:
       let
         attrs = import path;
-        lib =  (import nixpkgs).lib;
+        lib =  nixpkgs.lib;
         inp = if isFunction attrs.inputs then attrs.inputs {inherit lib;} else attrs.inputs or {};
 
         attrs' = attrs // {
