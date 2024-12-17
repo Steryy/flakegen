@@ -9,7 +9,7 @@
       type = "github";
     };
 
-  outputs = { self, systems }@inputs : with builtins; with self.lib; {
+  outputs = { self, systems, nixpkgs } : with builtins; with self.lib; {
 
     templates.default = {
       description = "Default template";
@@ -50,7 +50,7 @@
       flakeSource = path:
       let
         attrs = import path;
-        lib =  inputs.nixpkgs.lib;
+        lib =  (import nixpkgs).lib;
         inp = if isFunction attrs.inputs then attrs.inputs {inherit lib;} else attrs.inputs or {};
 
         attrs' = attrs // {
