@@ -3,7 +3,7 @@
 
   inputs.systems.url = "github:nix-systems/default";
 
-  outputs = { self, systems }: with builtins; with self.lib; {
+  outputs = { self, systems }@inputs : with builtins; with self.lib; {
 
     templates.default = {
       description = "Default template";
@@ -44,8 +44,11 @@
       flakeSource = path:
       let
         attrs = import path;
+        lib =  inputs.nixpkgs.lib;
+        inp = if isFunction attrs.inputs then attrs.inputs {inherit lib;} else attrs.inputs or {};
+
         attrs' = attrs // {
-          inputs = { flakegen.url = "github:jorsn/flakegen"; } // (attrs.inputs or {});
+          inputs = { flakegen.url = "github:Steryy/flakegen"; } // inp;
           outputs = "<outputs>";
         };
       in "# Do not modify! This file is generated.\n\n"
