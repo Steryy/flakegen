@@ -2,6 +2,12 @@
   description = "Flake inputs with the full power of Nixlang";
 
   inputs.systems.url = "github:nix-systems/default";
+    inputs.nixpkgs = {
+      owner = "NixOS";
+      ref = "nixpkgs-unstable";
+      repo = "nixpkgs";
+      type = "github";
+    };
 
   outputs = { self, systems }@inputs : with builtins; with self.lib; {
 
